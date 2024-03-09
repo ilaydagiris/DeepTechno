@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepTechno</title>
+    <style>
+        /* Genel Stiller */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f7f4; /* Arkaplan rengi */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Başlık Stilleri */
+        header {
+            background-color: #bbded6; /* Başlık arka plan rengi */
+            color: #333;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        /* Form Stilleri */
+        form {
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333; /* Form etiket rengi */
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc; /* Form çerçeve rengi */
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #7bc6b9; /* Düğme arka plan rengi */
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* Sonuç Kutusu */
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff; /* Sonuç kutusu arka plan rengi */
+            border: 1px solid #ccc; /* Sonuç kutusu çerçeve rengi */
+            border-radius: 10px;
+            color: #333; /* Sonuç metin rengi */
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Logo */
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo svg {
+            width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+            <!-- Dıştaki halka -->
+            <circle cx="100" cy="100" r="90" fill="#7bc6b9" />
+            <!-- Orta halka -->
+            <circle cx="100" cy="100" r="60" fill="#65b8ac" />
+            <!-- İçteki halka -->
+            <circle cx="100" cy="100" r="30" fill="#529d91" />
+            <!-- Metin -->
+            <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-size="27" font-style="oblique" font-weight="bold">DeepTechno</text>
+        </svg>
+    </div>
+    <h1>DeepTechno</h1>
+</header>
+<form action="/getlabel" method="post">
+    <label for="news">Haber:</label>
+    <textarea id="news" rows="4" cols="50"></textarea><br>
+    <button type="button" onclick="classifyNews()">Sınıflandır</button>
+</form>
+<div id="result">
+    <strong>Sonuç:</strong>
+</div>
+
+<script>
+    async function classifyNews() {
+        const news = document.getElementById('news').value;
+        const response = await fetch('/getlabel', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: news
+        });
+        const result = await response.text();
+        document.getElementById('result').innerHTML = '<strong>Sonuç:</strong> ' + result;
+    }
+</script>
+</body>
+</html>
